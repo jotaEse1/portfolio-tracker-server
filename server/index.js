@@ -5,10 +5,10 @@ const cors = require('cors');
 const {connection} = require('./db')
 
 //connect to db
-connection.connect(err => {
-    //if(err) throw err
-    console.log('Connected to db')
-})
+// connection.connect(err => {
+//     if(err) throw err
+//     console.log('Connected to db')
+// })
 
 //port
 const port = process.env.PORT | 8000
@@ -24,6 +24,9 @@ const portfolio = require('./routes/portfolio')
 
 app.use('/api/v1/portfolio', portfolio)
 
+aap.get('/', (req, res) => {
+    res.send('Hello!')
+})
 
 app.use('*', (req, res) => {
     res.send('<h1>Page not found</h1>')
