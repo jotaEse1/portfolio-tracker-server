@@ -45,7 +45,7 @@ const createPortfolio = (req, res) => {
         }))
         .catch(() => res.status(500).json({success: false, payload: {msg: `An error ocurred`}})); 
     })
-    .catch(() => res.status(500).json({success: false, payload: {msg: `An error ocurred while trying to create "${name}" portfolio`}}));
+    .catch(err => res.status(500).json({error: err, success: false, payload: {msg: `An error ocurred while trying to create "${name}" portfolio`}}));
 
 };
 
