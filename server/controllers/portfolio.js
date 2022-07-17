@@ -31,7 +31,7 @@ const createPortfolio = (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?);
     `;
 
-  connection.query(sql, [idUser, name, lastUpdate, value, tickers, returns])
+  connection.query(sql, [idUser, name, lastUpdate, value, JSON.stringify(tickers), JSON.stringify(returns)])
     .then(() => {
       connection.query('SELECT * FROM portfolio;')
         .then(portfolios => res.status(200).json({
