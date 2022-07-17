@@ -11,7 +11,7 @@ const {connection} = require('./db')
 // })
 
 //port
-const port = process.env.PORT | 8000
+const port = process.env.PORT || 8000
 
 //middlewares
 app.use(express.json({limit: '500mb'}))
