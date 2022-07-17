@@ -24,7 +24,7 @@ const portfolio = require('./routes/portfolio')
 
 app.use('/api/v1/portfolio', portfolio)
 
-aap.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Hello!')
 })
 
