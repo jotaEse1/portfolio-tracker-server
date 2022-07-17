@@ -28,7 +28,7 @@ const createPortfolio = (req, res) => {
 
   const sql = `
         INSERT INTO portfolio(id_user, name, last_update, value, tickers, returns)
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?);
     `;
 
   connection.query(sql, [idUser, name, lastUpdate, value, JSON.stringify(tickers), JSON.stringify(returns)])
