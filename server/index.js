@@ -5,10 +5,10 @@ const cors = require('cors');
 const {connection} = require('./db')
 
 //connect to db
-// connection.connect(err => {
-//     if(err) throw err
-//     console.log('Connected to db')
-// })
+connection.connect(err => {
+    if(err) throw err
+    console.log('Connected to db')
+})
 
 //port
 const port = process.env.PORT || 8000
