@@ -19,7 +19,7 @@ const port = process.env.PORT || 8000
 //middlewares
 app.use(express.json({limit: '500mb'}))
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: 'https://jotaese1.github.io'
 }))
 
 //routes
