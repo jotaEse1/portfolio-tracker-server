@@ -3,8 +3,7 @@ const router = express.Router()
 
 //actions from db
 const {
-    getPortfolios, 
-    insertTickers,
+    getPortfolios,
     createPortfolio,
     renamePortfolio,
     deletePortfolio,

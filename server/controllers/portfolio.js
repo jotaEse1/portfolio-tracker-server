@@ -147,7 +147,6 @@ const addHoldings = (req, res) => {
 
 module.exports = {
   getPortfolios,
-  insertTickers,
   createPortfolio,
   renamePortfolio,
   deletePortfolio,
