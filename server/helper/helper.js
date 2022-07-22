@@ -1,5 +1,5 @@
 const sendRefreshToken = (res, token) => {
-    res.cookie('refreshtoken', token, {httpOnly: true, path: '/'})
+    res.cookie('refreshtoken', token, {httpOnly: true, path: 'https://jotaese1.github.io/Portfolio-tracker/'})
 }
 
 const sendAccessToken = (res, id, username, token) => {
