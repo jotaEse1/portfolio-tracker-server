@@ -18,10 +18,7 @@ const port = process.env.PORT || 8000
 app.use(express.json({limit: '500mb'}))
 app.use(cors({
     origin: '*',
-    credentials: true,
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
+    credentials: true
 }))
 app.use(cookieParser())
 
