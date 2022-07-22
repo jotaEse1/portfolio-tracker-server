@@ -15,12 +15,12 @@ connection.connect(err => {
 const port = process.env.PORT || 8000
 
 //middlewares
+app.use(cookieParser())
 app.use(express.json({limit: '500mb'}))
 app.use(cors({
-    origin: '*',
+    origin: 'https://jotaese1.github.io',
     credentials: true
 }))
-app.use(cookieParser())
 
 //routes
 const portfolio = require('./routes/portfolio'),
