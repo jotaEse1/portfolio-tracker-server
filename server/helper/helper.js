@@ -1,5 +1,5 @@
 const sendRefreshToken = (res, token) => {
-    res.cookie('refreshtoken', token, {httpOnly: true, secure: false})
+    res.cookie('refreshtoken', token, {httpOnly: true, path: '/'})
 }
 
 const sendAccessToken = (res, id, username, token) => {
