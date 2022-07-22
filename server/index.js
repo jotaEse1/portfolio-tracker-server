@@ -17,7 +17,7 @@ const port = process.env.PORT || 8000
 //middlewares
 app.use(express.json({limit: '500mb'}))
 app.use(cors({
-    origin: 'https://jotaese1.github.io',
+    origin: '*',
     credentials: true,
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
