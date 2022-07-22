@@ -11,16 +11,17 @@ connection.connect(err => {
     console.log('Connected to db')
 })
 
-//port
-const port = process.env.PORT || 8000
-
 //middlewares
-app.use(cookieParser())
-app.use(express.json({limit: '500mb'}))
 app.use(cors({
     origin: 'https://jotaese1.github.io',
     credentials: true
 }))
+app.use(cookieParser())
+app.use(express.json({limit: '500mb'}))
+
+//port
+const port = process.env.PORT || 8000
+
 
 //routes
 const portfolio = require('./routes/portfolio'),
