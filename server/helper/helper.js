@@ -1,7 +1,7 @@
 const sendRefreshToken = (res, token) => {
-    res.cookie('refreshtoken', token, {httpOnly: true, path: 'https://jotaese1.github.io/'})
+    res.cookie('refreshtoken', token)
 }
-
+//, {httpOnly: true, path: 'https://jotaese1.github.io/'}
 const sendAccessToken = (res, id, username, token) => {
     res.send({
         success: true,
