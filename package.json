@@ -1,11 +1,11 @@
 {
-  "name": "portfolio-tracker-server-js",
+  "name": "portfolio-tracker",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js"
+    "start": "nodemon server/index.js"
   },
   "author": "Joaquin Sanchez",
   "license": "ISC",
@@ -17,7 +17,8 @@
     "express": "^4.18.1",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
