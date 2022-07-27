@@ -22,7 +22,6 @@ app.use(express.json({limit: '500mb'}))
 //port
 const port = process.env.PORT || 8000
 
-
 //routes
 const portfolio = require('./routes/portfolio'),
     authentication = require('./routes/authentication')

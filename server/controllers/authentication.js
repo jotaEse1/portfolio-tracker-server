@@ -1,7 +1,6 @@
 const { verify, sign } = require('jsonwebtoken');
 const { hash, compare, genSalt } = require('bcryptjs') 
 const { body, validationResult } = require('express-validator');
-const path = require('path');
 require('dotenv').config()
 const {sendAccessToken, sendRefreshToken} = require('../helper/helper')
 
@@ -75,7 +74,6 @@ const logIn = async (req, res) => {
     let errors = validationResult(req),
         {password, email} = req.body;
        
-    console.log(password, email)
     //checking for errors in email and password
     if(!errors.isEmpty()) return res.json({
         success: true,
@@ -139,78 +137,141 @@ const logIn = async (req, res) => {
             }
         });
     }
-
-    
-
 }
 
 const checkToken = async (req, res) => {
     const token = req.cookies.refreshtoken
-    console.log(token)
-  
+
     //validate if token exists
-    if(!token) return res.json({success: true, accessToken: ''})
-
-    //verify token
-    let payload;
-    try {
-        payload = verify(token, process.env.REFRESH_TOKEN_SECRET)
-    } catch {
-        return res.json({success: true, accesstoken: '' })
-    }
-
-    //validate user
-    const sqlFindUser = 'SELECT * FROM user WHERE id = ?;',
-        user = await new Promise((resolve, reject) => {
-            connection.query(sqlFindUser, [payload.id], (err, user) => {
-                if(err) return reject(err)
-                resolve(user)
-            })
-        })
-
-    if(!user) return res.json({success: true, accessToken: ''})
-    
-    const {id, token: dbToken} = user[0];
-
-    if(dbToken !== token) return res.json({success: true, accessToken: ''})
-
-    //create access and refresh tokens
-    const accessToken = sign({id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'}),
-        refreshToken = sign({id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
-
-    //save refreshToken in database 
-    const sqlSaveToken = 'UPDATE user SET token = ? WHERE id = ?;'
-    await new Promise((resolve, reject) => {
-        connection.query(sqlSaveToken, [refreshToken, id], (err, logged) => {
-            if(err) return reject(err)
-            resolve(logged)
-        })
+    if(!token) return res.json({
+        success: true, 
+        payload: {
+            status: 404,
+            msg: 'You need to log in.'
+        }
     })
 
-    //send tokens
-    sendRefreshToken(res, refreshToken)
-    res.json({accessToken})
+    //verify token
+    try {
+        const payload = verify(token, process.env.REFRESH_TOKEN_SECRET)
+
+        //validate user
+        const sqlFindUser = 'SELECT * FROM user WHERE id = ?;',
+            user = await new Promise((resolve, reject) => {
+                connection.query(sqlFindUser, [payload.id], (err, user) => {
+                    if(err) return reject(err)
+                    resolve(user)
+                })
+            })
+
+        if(!user) return res.json({
+            success: true, 
+            payload: {
+                status: 404,
+                msg: 'You need to log in.'
+            }
+        })
+
+        const {id, token: dbToken} = user[0];
+
+        if(dbToken !== token) return res.json({
+            success: true, 
+            payload: {
+                status: 404,
+                msg: 'You need to log in.'
+            }
+        })
+
+        //create access and refresh tokens
+        const accessToken = sign({id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'}),
+            refreshToken = sign({id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
+
+        //save refreshToken in database 
+        const sqlSaveToken = 'UPDATE user SET token = ? WHERE id = ?;',
+            {changedRows} = await new Promise((resolve, reject) => {
+                connection.query(sqlSaveToken, [refreshToken, id], (err, logged) => {
+                    if(err) return reject(err)
+                    resolve(logged)
+                })
+            })
+
+        if(!changedRows) return res.json({
+            success: true, 
+            payload: {
+                status: 404,
+                msg: 'No token'
+            }
+        })
+
+        //send tokens
+        sendRefreshToken(res, refreshToken)
+        res.json({
+            success: true, 
+            payload: {
+                status: 200,
+                accessToken
+            }
+        })
+
+    } catch(error) {
+        return res.json({
+            success: false, 
+            payload: {
+                error
+            }
+        })
+    }
 }
 
 const logOut = async (req, res) => {
     const token = req.cookies.refreshtoken;
 
-    if(!token) return res.json({success: true, msg: 'No token'})
+    if(!token) return res.json({
+        success: true, 
+        payload: {
+            msg: 'You need to log in.'
+        }
+    })
 
     //find user, i need the _id
-    let payload;
     try {
-        payload = verify(token, process.env.REFRESH_TOKEN_SECRET)
+        const payload = verify(token, process.env.REFRESH_TOKEN_SECRET)
+
+        //delete token in db
+        const sqlDeleteToken = 'UPDATE user SET token = ? WHERE id = ?;'
+        const {changedRows} = await new Promise((resolve, reject) => {
+            connection.query(sqlDeleteToken, ['', payload.id], (err, loggedOut) => {
+                if(err) return reject(err)
+                resolve(loggedOut)
+            })
+        })
+
+        if(!changedRows) return res.json({
+            success: true, 
+            payload: {
+                msg: 'No token'
+            }
+        })
+
+        //delete cookie
+        res.clearCookie('refreshtoken')
+        return res.json({
+            success: true, 
+            payload: {
+                msg: 'Logged out'
+            } 
+        })
+
     } catch (error) {
-        return res.json({success: true, msg: 'Something went wrong. Try again later...' })
+        return res.json({
+            success: false, 
+            payload: {
+                error
+            }
+        })
     }
 
-    //delete token in db
-    await User.updateOne({'_id': payload['_id']}, {$set: {'token': ''}})
-
-    //delete cookie
-    res.clearCookie('refreshtoken')
-    return res.json({success: true, msg: 'Logged out'})
+    
 }
 
 
