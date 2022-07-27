@@ -1,9 +1,9 @@
 const sendRefreshToken = (res, token) => {
     res.cookie('refreshtoken', token, {
-        httpOnly: true, 
-        secure: true, 
+        httpOnly: true
+        //secure: true, 
         //domain: '.github.io',
-        path: '/'
+        //path: '/'
     })
 }
 
