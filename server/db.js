@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
     user: process.env.USER,
     password: process.env.PASSWORD,
     database: process.env.DB,
-    ssl: true
+    ssl: false
 })
 
 connection.query = util.promisify(connection.query)

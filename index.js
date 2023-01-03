@@ -5,11 +5,11 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const {connection} = require('./server/db')
 
-//connect to db
-// connection.connect(err => {
-//     if(err) throw err
-//     console.log('Connected to db')
-// })
+//connect to dba
+connection.connect(err => {
+    if(err) throw err
+    console.log('Connected to db')
+})
 
 //middlewares
 app.use(cors({
