@@ -29,7 +29,7 @@ const portfolio = require('./routes/portfolio'),
 app.use('/api/v1/portfolio', portfolio)
 app.use('/api/v1/authentication', authentication)
 
-app.get('/', (req, res) => {
+app.get('/home', (req, res) => {
     res.send('Hello!')
 })
 
@@ -40,5 +40,3 @@ app.use('*', (req, res) => {
 app.listen(port, (req, res) => {
     console.log(`Server is running on port ${port}`)
 })
-
-module.exports = app
