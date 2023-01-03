@@ -3,7 +3,7 @@ const app = express()
 require('dotenv').config()
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const {connection} = require('./db')
+const {connection} = require('./server/db')
 
 //connect to db
 connection.connect(err => {
@@ -23,8 +23,8 @@ app.use(express.json({limit: '500mb'}))
 const port = process.env.PORT || 8000
 
 //routes
-const portfolio = require('./routes/portfolio'),
-    authentication = require('./routes/authentication')
+const portfolio = require('./server/routes/portfolio'),
+    authentication = require('./server/routes/authentication')
 
 app.use('/api/v1/portfolio', portfolio)
 app.use('/api/v1/authentication', authentication)
