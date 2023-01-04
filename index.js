@@ -29,7 +29,7 @@ const portfolio = require('./server/routes/portfolio'),
 
 app.use('/api/v1/portfolio', portfolio)
 app.use('/api/v1/authentication', authentication)
-app.use('/api/v1/vercel', (req, res) => {res.send("Holaaaaaa")})
+app.get('/api/v1/vercel', (req, res) => {res.send("Holaaaaaa")})
 
 app.get('/', (req, res) => {
     res.send('Hello!')
