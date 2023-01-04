@@ -13,10 +13,10 @@ connection.connect(err => {
 })
 
 //middlewares
-// app.use(cors({
-//     origin: 'https://jotaese1.github.io',
-//     credentials: true
-// }))
+app.use(cors({
+    // origin: 'https://jotaese1.github.io',
+    credentials: true
+}))
 app.use(cookieParser())
 app.use(express.json({limit: '500mb'}))
 
