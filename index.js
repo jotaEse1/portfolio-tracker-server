@@ -7,6 +7,7 @@ const {connection} = require('./server/db')
 
 //connect to dba
 connection.connect(err => {
+    console.log(err)
     if(err) throw err
     console.log('Connected to db')
 })
