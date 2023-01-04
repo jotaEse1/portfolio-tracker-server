@@ -30,7 +30,7 @@ const portfolio = require('./server/routes/portfolio'),
 app.use('/api/v1/portfolio', portfolio)
 app.use('/api/v1/authentication', authentication)
 
-app.get('/home', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Hello!')
 })
 
