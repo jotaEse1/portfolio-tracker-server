@@ -12,7 +12,7 @@
           "headers": [
             {
               "key": "access-control-allow-origin",
-              "value": "*"
+              "value": "https://jotaese1.github.io"
             }
           ]
         }
