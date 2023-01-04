@@ -14,7 +14,7 @@ connection.connect(err => {
 
 //middlewares
 app.use(cors({
-    origin: 'https://jotaese1.github.io',
+    origin: '*',
     credentials: true
 }))
 app.use(cookieParser())
@@ -27,11 +27,6 @@ const port = process.env.PORT || 8000
 const portfolio = require('./server/routes/portfolio'),
     authentication = require('./server/routes/authentication')
 
-    app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-      });
 app.use('/api/v1/portfolio', portfolio)
 app.use('/api/v1/authentication', authentication)
 
