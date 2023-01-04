@@ -14,7 +14,7 @@ connection.connect(err => {
 
 //middlewares
 app.use(cors({
-    origin: '*',
+    origin: true,
     credentials: true
 }))
 app.use(cookieParser())
