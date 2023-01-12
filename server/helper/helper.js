@@ -2,8 +2,7 @@ const sendRefreshToken = (res, token) => {
     res.cookie('refreshtoken', token, {
         httpOnly: true, 
         secure: true, 
-        sameSite: "none",
-        path: '/refresh_token'
+        sameSite: "none"
     })
 }
 
